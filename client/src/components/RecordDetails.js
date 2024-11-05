@@ -120,7 +120,7 @@ class RecordDetails extends Component
     render()
     {
 
-        var recordId = this.props.routeParams.recordId;
+        var recordId = this.props.routeParams?.recordId;
         console.log(this.props);
         return(
             <div>
