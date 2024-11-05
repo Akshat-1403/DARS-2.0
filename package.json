@@ -1,0 +1,10 @@
+{
+  "scripts": {
+    "compile" : "truffle compile",
+    "migrate" : "truffle migrate",
+    "develop" : "truffle develop"
+  },
+  "dependencies": {
+    "truffle": "^5.11.5"
+  }
+}
