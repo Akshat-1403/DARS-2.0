@@ -3,13 +3,13 @@ import React from "react";
 import { Route, Navigate } from "react-router";
 import { BrowserRouter, Routes } from "react-router-dom";
 
-import Home from './components/Home'
-import StudentHome from './components/StudentHome'
-import NewRecord from './components/NewRecord'
-import ViewRecord from './components/ViewRecord';
+import Home from './components/Home.jsx'
+import StudentHome from './components/StudentHome.jsx'
+import NewRecord from './components/NewRecord.jsx'
+import ViewRecord from './components/ViewRecord.jsx';
 import Educational from './components/EducationalDetails/Educational'
-import EducationHome from './components/EducationHome'
-import RecordDetails from './components/RecordDetails'
+import EducationHome from './components/EducationHome.jsx'
+import RecordDetails from './components/RecordDetails.jsx'
 
 import "./App.css";
 
