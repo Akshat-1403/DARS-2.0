@@ -40,7 +40,7 @@ const Login = () => {
               <i className="material-icons prefix grey-text text-darken-3">fingerprint</i>
               <input
                 type="text"
-                id="email"
+                id="loginID"
                 onChange={(evt) => setUsername(evt.target.value)}
               />
               <label htmlFor="loginID">Login ID</label>
