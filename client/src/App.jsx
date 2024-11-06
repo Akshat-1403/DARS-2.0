@@ -10,12 +10,12 @@ import {
   ViewRecordPage,
   UploadRecord
 }  from "./pages";
-// import { ContextProvider } from "./context/Context";
+import { ContextProvider } from "./context/context";
 
 function App() {
 
   return (
-    // <ContextProvider>
+    <ContextProvider>
       <BrowserRouter basename="/">
         <Routes>
           <Route path="/" element={<SharedLayout />} > 
@@ -38,7 +38,7 @@ function App() {
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </BrowserRouter>
-    // </ContextProvider>
+    </ContextProvider>
   )
 }
 

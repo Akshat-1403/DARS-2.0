@@ -63,7 +63,7 @@ export default function UploadRecord(props) {
       </h4>
       <div className="my-4">
         <form onSubmit={onSubmit} id="donateForm" className="space-y-6">
-          <div className="flex flex-col space-y-2 md:w-1/2">
+          <div className="flex flex-col gap-1 md:w-1/2">
             <label htmlFor="record_id" className="block text-sm font-medium text-gray-700">
                 Institute ID
             </label>
@@ -78,7 +78,7 @@ export default function UploadRecord(props) {
             />
           </div>
 
-          <div className="flex flex-col space-y-4 md:w-1/2">
+          <div className="flex flex-col gap-1 md:w-1/2 md:w-1/2">
             <label htmlFor="address" className="block text-sm font-medium text-gray-700">
                 Student Address Key
             </label>
@@ -92,7 +92,7 @@ export default function UploadRecord(props) {
             />
           </div>
 
-          <div className="flex flex-col space-y-4 md:w-3/4">
+          <div className="flex flex-col gap-1 md:w-1/2 md:w-3/4">
             <label htmlFor="record_name" className="block text-sm font-medium text-gray-700">
               Record Name
             </label>
@@ -107,7 +107,7 @@ export default function UploadRecord(props) {
             />
           </div>
 
-          <div className="flex flex-col space-y-4 md:w-3/4">
+          <div className="flex flex-col gap-1 md:w-1/2">
             <label htmlFor="desc" className="block text-sm font-medium text-gray-700">
               Description
             </label>
@@ -120,7 +120,7 @@ export default function UploadRecord(props) {
             />
           </div>
 
-          <div className="flex flex-col space-y-4 md:w-3/4">
+          <div className="flex flex-col gap-1 md:w-3/4">
             <label htmlFor="payment" className="block text-sm font-medium text-gray-700">Documents (upload in .zip or .rar format)</label>
             <input 
               className="w-[36vw] border border-gray-300 rounded-md p-2" 
@@ -130,7 +130,7 @@ export default function UploadRecord(props) {
             />
           </div>
 
-          <div className="flex flex-col space-y-4 md:w-1/2">
+          <div className="flex flex-col gap-1 md:w-1/2">
             <label htmlFor="timestamp" className="block text-sm font-medium text-gray-700">TIMESTAMP</label>
             <input 
               value={timestamp} 
