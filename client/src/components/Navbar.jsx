@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 const Navbar = ({ showConnectModal }) => {
 //   const { wallet, resetWallet} = useAppContext();
   const [toggleValue, setToggle] = useState(false);
+  const [showOption, setShowOption] = useState(false);
 
   const navRef = useRef(null);
 
@@ -67,19 +68,19 @@ const Navbar = ({ showConnectModal }) => {
         >
           Built on Ethereum
         </a>
-        <button
-          className="connect-button"
-        //   onClick={wallet ? () => resetWallet() : () => showConnectModal(true/)}
+        <div 
+          className="px-3 py-2 relative hover:cursor-pointer bg-blue-500 rounded" 
+          onClick={()=>setShowOption(!showOption)}
         >
+          {"Connect "}<span>&#11167;</span>
           {
-            // wallet 
-            // && wallet.getAddress
-            // ? 
-            // `Disconnect: ${wallet && truncateStr(wallet?.getAddress(), 11)}`
-            // : 
-            "Connect"
+            showOption && 
+            <div className="absolute left-0 top-[102%] bg-blue-500 p-2 flex flex-col gap-2 w-full rounded">
+              <button>Sign Up</button>
+              <button>Login</button>
+            </div>
           }
-        </button>
+        </div>
       </ul>
     </nav>
   );
