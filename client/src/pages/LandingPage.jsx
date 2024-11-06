@@ -1,7 +1,10 @@
 import {Link} from "react-router-dom"
 import { ReactTyped } from "react-typed";
+import { useAppContext } from "../context/context";
+import { ConnectBtn } from "../components";
 
 export default function LandingPage(){
+    const { account } = useAppContext();
     return (
     <div className="w-full px-4 sm:px-9 flex gap-8 justify-between items-center">
         <div className="w-full lg:w-[40vw]">
@@ -24,7 +27,14 @@ export default function LandingPage(){
                 Institutes can upload their students data and courses attended by them.
                 This records is decentralized and can be verified from anywhere, by anyone.
             </p>
-            <Link to="/records" className="connect-button !mx-0 hover:bg-[#1d4ed8]">Get Started</Link>
+            {
+                account ? 
+                <Link to="/select-roles" className="connect-button !mx-0 hover:bg-[#1d4ed8]">
+                    Get Started
+                </Link>
+                :
+                <ConnectBtn />
+            }
         </div>
         <img className="w-[36vw] hidden lg:block" src="/moi_landingPage.svg" alt="landing page"/>        
     </div> 
