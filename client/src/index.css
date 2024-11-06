@@ -1,15 +1,310 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  font-family: "Satoshi-Medium";
+  src: url("../public/fonts/Satoshi-Medium.woff2") format("woff2"),
+    url("../public/fonts/Satoshi-Medium.woff") format("woff");
+  font-weight: 400;
+  font-display: swap;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Satoshi-Black";
+  src: url("../public/fonts/Satoshi-Black.woff2") format("woff2"),
+    url("../public/fonts/Satoshi-Black.woff") format("woff");
+  font-weight: 900;
+  font-display: swap;
+  font-style: normal;
+}
+
+:root {
+  --font-Satoshi-Black: "Satoshi-Black", sans-serif;
+  --font-poppins: "Poppins", sans-serif;
+  --font-satoshi-regular: "Satoshi-Medium", sans-serif;
+  /*  (black with 75% opacity for lightbox background) */
+}
+
+/* font-family: 'Inter', sans-serif;*/
+
 body {
+  height: 100%;
+  font-size: 16px;
+  font-weight: normal;
+  overflow-x: hidden;
+  position: relative;
+  font-family: var(--font-satoshi-regular);
+}
+
+* {
   margin: 0;
   padding: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  list-style-type: none;
+  box-sizing: border-box;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
-    monospace;
+strong {
+  font-weight: 700;
+  font-family: "Inter", sans-serif;
 }
 
+p {
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+a {
+  text-decoration: none !important;
+  transition: ease-in-out 0.3s;
+  display: inline-block;
+}
+
+a:hover,
+a:active,
+a:focus {
+  transition: ease-in-out 0.3s;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: normal;
+  font-family: var(--font-Satoshi-Black);
+  margin: 0;
+  line-height: 1.5;
+  font-weight: 400;
+}
+
+h1 {
+  font-size: 62px;
+}
+
+h2 {
+  font-size: 30px;
+}
+
+h3 {
+  font-size: 26px;
+}
+
+h4 {
+  font-size: 24px;
+}
+
+h5 {
+  font-size: 20px;
+}
+
+ul {
+  margin: 0;
+}
+
+input,
+select,
+textarea,
+button,
+input:focus,
+button:focus {
+  outline: none;
+}
+
+button {
+  transition: ease-in-out 0.3s;
+  font-family: var(--font-satoshi-regular);
+}
+
+img {
+  max-width: 100%;
+}
+
+header,
+section,
+footer {
+  width: 100%;
+}
+
+header {
+  box-shadow: 0px 10px 10px 0px rgba(0, 0, 0, 0.05);
+  width: 100%;
+  padding: 14px;
+  background: #03005666;
+}
+
+/* Navbar */
+
+.navbar {
+  background-color: white;
+  position: sticky;
+  padding-inline: 6vw;
+  top: 0;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1.5px solid hsla(215, 8%, 30%, 0.25);
+  z-index: 5;
+}
+
+.nav__header {
+  display: flex;
+  align-items: center;
+}
+
+.nav__links {
+  list-style: none;
+  display: flex;
+  margin: 0;
+  color: white;
+  display: flex;
+  align-items: center;
+}
+
+.nav__links a {
+  text-decoration: none;
+  color: var(--color-Dark-grayish-blue);
+}
+
+.nav__links a {
+  cursor: pointer;
+  padding: 2rem 0;
+  margin: 0 1.5rem;
+  background-image: linear-gradient(0deg, #2563eb, #2563eb);
+  background-size: 0 5px, auto;
+  background-repeat: no-repeat;
+  background-position: center bottom;
+  transition: all 0.2s ease-out;
+  color: black;
+}
+
+.nav__links a:hover {
+  background-size: 100% 5px, auto;
+}
+
+.navbar__logo {
+  font-size: 40px;
+  font-weight: 700;
+  color: black;
+}
+
+@media screen and (max-width: 920px) {
+  .navbar__logo {
+    font-size: 40px;
+  }
+
+  .navbar {
+    padding: 0.5rem 1rem;
+  }
+
+  .nav__links {
+    position: absolute;
+    flex-direction: column;
+    height: 85vh;
+    top: 15vh;
+    left: -500px;
+    font-weight: bold;
+    color: black;
+    background-color: white;
+    z-index: 20;
+    justify-content: flex-start;
+    width: 50vw;
+    row-gap: 5%;
+    padding: 2rem 2rem;
+    transition: all 0.3s ease-in-out;
+  }
+
+  .nav__burger div {
+    width: 20px;
+    border-bottom: 4px solid black;
+  }
+
+  .nav__burger {
+    cursor: pointer;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    margin-right: 2rem;
+  }
+
+  .nav__burger--close div:nth-of-type(2) {
+    display: none;
+  }
+
+  .nav__burger--close div:nth-of-type(1) {
+    transition: all 0.2s;
+    transform: rotate(45deg);
+    position: relative;
+    top: 8.1px;
+  }
+  .nav__burger--close div:nth-of-type(3) {
+    transition: all 0.2s;
+    transform: rotate(-45deg);
+    position: relative;
+    bottom: 8.1px;
+  }
+
+  .nav__links--expanded {
+    left: 0;
+  }
+
+  .nav__links a {
+    padding: 0.5rem;
+    margin: 1rem 0;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .nav__links a {
+    margin: 0 1.4rem;
+  }
+
+  .navbar__balance {
+    font-size: 15px;
+  }
+
+  .navbar {
+    padding: 0 6vw;
+  }
+}
+
+.connect-button {
+  padding: 10px 15px;
+  font-size: 16px;
+  background-color: #2563eb; /* Green color, you can change this */
+  color: #fff; /* White text, you can change this */
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-family: var(--font-satoshi-regular);
+  transition: background-color 0.3s ease;
+  height: 50px;
+  margin-left: 1.4rem
+}
+
+.navbar .connect-button:hover {
+  background-color: #1d4ed8; /* Darker green color on hover, you can change this */
+}
+
+@media screen and (max-width: 920px) {
+  .navbar .connect-button {
+    height: 60px;
+  }
+}
+
+@media screen and (max-width: 420px) {
+  .nav__links {
+    width: 100vw;
+    height: 81vh;
+    top: 19vh;
+  }
+  .add-course-form{
+    width: 100% !important;
+  }
+}
