@@ -1,8 +1,8 @@
 const path = require("path");
 // var  HDWalletProvider = require('./client/node_modules/truffle-hdwallet-provider');
 
-// var infura_apikey = "f2477b75edf34b4999896ce9ef3b585c";
-// var mnemonic = "size alley piece zone erosion decide royal foam sentence lava erosion eyebrow";
+// var infura_apikey = "";
+// var mnemonic = "";
 
 module.exports = {
   // See <http://truffleframework.com/docs/advanced/configuration>

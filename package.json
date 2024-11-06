@@ -1,10 +1,11 @@
 {
   "scripts": {
-    "compile" : "truffle compile",
-    "migrate" : "truffle migrate",
-    "develop" : "truffle develop"
+    "compile": "truffle compile",
+    "migrate": "truffle migrate",
+    "develop": "truffle develop"
   },
   "dependencies": {
+    "dotenv": "^16.4.5",
     "truffle": "^5.11.5"
   }
 }

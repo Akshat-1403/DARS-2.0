@@ -37,15 +37,15 @@ contract DecentralizedAcademicRecordSystem {
         _;
     }
 
-    // Function to add or update institute details
-    function addOrUpdateInstitute(string memory name, string memory location) public {
-        institutes[msg.sender] = Institute(name, location, true);
-    }
+    // // Function to add or update institute details
+    // function addOrUpdateInstitute(string memory name, string memory location) public {
+    //     institutes[msg.sender] = Institute(name, location, true);
+    // }
 
-    // Function to add or update student details
-    function addOrUpdateStudent(string memory name) public {
-        students[msg.sender] = Student(name, true);
-    }
+    // // Function to add or update student details
+    // function addOrUpdateStudent(string memory name) public {
+    //     students[msg.sender] = Student(name, true);
+    // }
 
     // Function to upload a document (only by institutes)
     function uploadDoc(address studentAddress, bytes32 docHash, string memory docTitle, string memory docDesc) public onlyInstitute {
@@ -116,10 +116,10 @@ contract DecentralizedAcademicRecordSystem {
     event VerificationApproved(address indexed student, address indexed verifier, bytes32 docHash);
 
     // Function to request verification for a specific document
-    function requestVerification(address studentAddress, bytes32 docHash) public {
-        require(documents[docHash].studentAddress == studentAddress, "Document does not belong to the specified student");
+    function requestVerification(bytes32 docHash) public {
         require(documents[docHash].isApproved, "Document is not approved by the student");
-
+        
+        address studentAddress = documents[docHash].studentAddress;
         // Create a new verification request
         verificationRequests[studentAddress].push(VerificationRequest({
             verifier: msg.sender,
