@@ -3,9 +3,9 @@ const context = React.createContext();
 
 
 export const ContextProvider = ({children})=>{
-    const [web3, setWeb3] = useState({});
-    const [account, setAccount] = useState({});
-    const [contract, setContract] = useState({});
+    const [web3, setWeb3] = useState(null);
+    const [account, setAccount] = useState(null);
+    const [contract, setContract] = useState(null);
 
     return (
         <context.Provider

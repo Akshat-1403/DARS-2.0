@@ -1,14 +1,44 @@
 import React, { useState, useEffect, useRef } from "react";
 import { truncateStr } from "../utils/truncateStr";
-// import { useAppContext } from "../context/Context";
 import { Link } from "react-router-dom";
 
+import getWeb3 from '../utils/getWeb3'
+import EducationContract from '../contracts/EducationContract.json'
+import { useAppContext } from '../context/context.jsx'
+
 const Navbar = ({ showConnectModal }) => {
-//   const { wallet, resetWallet} = useAppContext();
+  
   const [toggleValue, setToggle] = useState(false);
   const [showOption, setShowOption] = useState(false);
+  const {web3, account, contract, setWeb3, setAccount, setContract} = useAppContext();
 
   const navRef = useRef(null);
+
+  const initWeb3 = async () => {
+    if(web3 && account && contract) return;
+    try {
+      const web3 = await getWeb3();
+      const accounts = await web3.eth.getAccounts();
+      const networkId = await web3.eth.net.getId();
+      const deployedNetwork = EducationContract.networks[networkId];
+      const instance = new web3.eth.Contract(
+        EducationContract.abi,
+        deployedNetwork && deployedNetwork.address,
+      );
+
+      setWeb3(web3);
+      setAccount(accounts[0]);
+      setContract(instance);
+    } catch (error) {
+      alert(`Failed to load wallet`);
+      console.error(error);
+    }
+  };
+
+  useEffect(()=>{
+    initWeb3();
+  }, [])
+
 
   const handleToggle = () => {
     setToggle(!toggleValue);
@@ -43,7 +73,7 @@ const Navbar = ({ showConnectModal }) => {
         </div>
         <div className="navbar__logo leading-[1em] flex gap-4 items-center" href="/">
           <Link to="/">
-            <img src="/logo.svg" alt="logo" className="w-12 h-12"/>
+            <img src="/logo.svg" alt="logo" className="w-12 h-12" />
           </Link>
           <div className="flex flex-col text-2xl gap-[-10px]">
             <div>Decentralized Academic </div>
@@ -57,7 +87,7 @@ const Navbar = ({ showConnectModal }) => {
           (toggleValue && "nav__links nav__links--expanded !text-sm") || "nav__links !text-sm"
         }
       >
-        <Link className="text-center" onClick={()=>setToggle(false)} to="/view-record">
+        <Link className="text-center" onClick={() => setToggle(false)} to="/view-record">
           View Record
         </Link>
         <a
@@ -68,19 +98,17 @@ const Navbar = ({ showConnectModal }) => {
         >
           Built on Ethereum
         </a>
-        <div 
-          className="px-3 py-2 relative hover:cursor-pointer bg-blue-500 rounded" 
-          onClick={()=>setShowOption(!showOption)}
+        <button
+          className="px-3 py-2 relative hover:cursor-pointer bg-blue-500 rounded"
+          onClick={() => {
+            initWeb3();
+            setShowOption(!showOption)
+          }}
         >
-          {"Connect "}<span>&#11167;</span>
           {
-            showOption && 
-            <div className="absolute left-0 top-[102%] bg-blue-500 p-2 flex flex-col gap-2 w-full rounded">
-              <button>Sign Up</button>
-              <button>Login</button>
-            </div>
+            account? truncateStr(account,12) : "Connect"
           }
-        </div>
+        </button>
       </ul>
     </nav>
   );
