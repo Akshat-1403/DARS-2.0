@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useAppContext } from "../context/context";
 
@@ -9,6 +9,7 @@ export default function ViewSingleRecordPage() {
     const { account, contract } = useAppContext();
 
     useEffect(()=> {
+        setLocalLoading(true);
         const getRecord = async ()=>{
             try {
                 const res = await (contract.methods
