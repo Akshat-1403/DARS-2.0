@@ -1,16 +1,26 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { useAppContext } from "../context/context";
 
 export default function ListComponent(resource) {
   const [expand, setExpand] = useState(false);
-  // description
+  const { account, contract, getRecords } = useAppContext();
+
   const truncatedDescription =
     resource.description.length > 200 && !expand
       ? `${resource.description.substr(0, 200)}...`
       : resource.description;
 
   const handleApprove = async (e) => {
-    // do something
+    try {
+      const res = await (contract.methods
+        .approveRecord(resource.docHash)
+        .send({ from: account }));
+      console.log("Approved");
+      getRecords();
+    } catch(err) {
+      console.log("ERROR WHILE APPROVING RECORD", err)
+    }
   }
     
   return (
