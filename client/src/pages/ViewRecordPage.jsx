@@ -1,11 +1,15 @@
 import { useState } from "react";
 import { Loader } from "../components";
+import { useNavigate } from "react-router-dom";
 
 export default function ViewRecordPage() {
-  const [recordAddress, setRecordAddress] = useState("");
   const loading = false;
+  const navigate = useNavigate();
+  const [recordAddress, setRecordAddress] = useState("");
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+    navigate("/view-record/" + recordAddress);
   }
 
   return (
@@ -38,7 +42,7 @@ export default function ViewRecordPage() {
             {
                 loading?
                 <Loader loading={loading} size="1rem" color={"white"} />:
-                "Add+"
+                "Find"
             }
             </button>
         </form>

@@ -1,8 +1,8 @@
-import { useState, useEffect } from 'react';
-import { ethers } from 'ethers'
+import { useState, useEffect } from "react";
+import { ethers } from "ethers";
 // import ipfs from '../ipfs.js';
 
-import { useAppContext } from '../../context/context';
+import { useAppContext } from "../../context/context";
 // import EducationContract from "../contracts/EducationContract.json";
 // import getWeb3 from "../utils/getWeb3.js";
 
@@ -13,10 +13,10 @@ export default function UploadRecord(props) {
   const [buffer, setBuffer] = useState(null);
   const [recordIdState, setRecordId] = useState("");
   const [docHash, setDocHash] = useState(null);
-  const [address, setAddress] = useState('');
-  const [recordName, setRecordName] = useState('');
-  const [desc, setDesc] = useState('');
-  const [timestamp, setTimestamp] = useState('');
+  const [address, setAddress] = useState("");
+  const [recordName, setRecordName] = useState("");
+  const [desc, setDesc] = useState("");
+  const [timestamp, setTimestamp] = useState("");
 
   const generateTimestamp = () => {
     const date = new Date();
@@ -46,7 +46,7 @@ export default function UploadRecord(props) {
     });
   }
 
-  const captureFile = (event) => {
+  const captureFile = async (event) => {
     event.preventDefault();
     const file = event.target.files[0];
     if (!file) return;
@@ -54,11 +54,28 @@ export default function UploadRecord(props) {
       // Step 1: Read file content
       const fileContent = readFileContent(file);
       // Step 2: Create a SHA-256 hash with ethers
-      const hashHex = ethers.keccak256(new Uint8Array(fileContent));
-      console.log(hashHex)
+      const hashHex = ethers.keccak256 ? 
+        ethers.keccak256(new Uint8Array(fileContent))
+        :
+        ethers.utils.keccak256(new Uint8Array(fileContent));
+      console.log(hashHex);
       // (file, '../../../uploads/'+hashHex)
 
       setDocHash(hashHex);
+      
+      const formData = new FormData();
+      formData.append("file", file);
+      formData.append("hash", hashHex);
+
+      const response = await fetch("http://localhost:3000/upload", {
+        method: "POST",
+        body: formData,
+      });
+      if (response.ok) {
+        console.log("File uploaded successfully!");
+      } else {
+        console.error("File upload failed");
+      }
     } catch (error) {
       console.error("Error creating hash:", error);
     }
@@ -66,11 +83,11 @@ export default function UploadRecord(props) {
 
   const onSubmit = async (event) => {
     event.preventDefault();
-    console.log(contract)
+    console.log(contract);
     try {
-      const res = await (contract.methods
+      const res = await contract.methods
         .uploadDoc(address, docHash, recordName, desc)
-        .send({ from: account }));
+        .send({ from: account });
 
       // setDetails(response);
       console.log(res);
@@ -87,18 +104,18 @@ export default function UploadRecord(props) {
     // });
   };
 
-
   return (
-    <div className='w-full flex justify-between items-start'>
-      <img src='/upload-illustration.svg' alt='upload' className='w-96 mt-20' />
-      <div className='p-4 border border-black rounded-2xl'>
-        <h4 className="text-2xl font-semibold">
-          Upload Education Reports
-        </h4>
+    <div className="w-full flex justify-between items-start">
+      <img src="/upload-illustration.svg" alt="upload" className="w-96 mt-20" />
+      <div className="p-4 border border-black rounded-2xl">
+        <h4 className="text-2xl font-semibold">Upload Education Reports</h4>
         <div className="my-4">
           <form onSubmit={onSubmit} id="donateForm" className="space-y-6">
             <div className="flex flex-col gap-1 md:w-1/2">
-              <label htmlFor="record_id" className="block text-sm font-medium text-gray-700">
+              <label
+                htmlFor="record_id"
+                className="block text-sm font-medium text-gray-700"
+              >
                 Institute ID
               </label>
               <input
@@ -113,12 +130,16 @@ export default function UploadRecord(props) {
             </div>
 
             <div className="flex flex-col gap-1 md:w-1/2 md:w-1/2">
-              <label htmlFor="address" className="block text-sm font-medium text-gray-700">
+              <label
+                htmlFor="address"
+                className="block text-sm font-medium text-gray-700"
+              >
                 Student Address Key
               </label>
               <input
                 className="w-[36vw] border border-gray-300 rounded-md p-2"
-                type="text" id="address"
+                type="text"
+                id="address"
                 name="address"
                 placeholder="Enter Student Address key"
                 onChange={(e) => setAddress(e.target.value)}
@@ -127,7 +148,10 @@ export default function UploadRecord(props) {
             </div>
 
             <div className="flex flex-col gap-1 md:w-1/2 md:w-3/4">
-              <label htmlFor="record_name" className="block text-sm font-medium text-gray-700">
+              <label
+                htmlFor="record_name"
+                className="block text-sm font-medium text-gray-700"
+              >
                 Record Name
               </label>
               <input
@@ -142,12 +166,17 @@ export default function UploadRecord(props) {
             </div>
 
             <div className="flex flex-col gap-1 md:w-1/2">
-              <label htmlFor="desc" className="block text-sm font-medium text-gray-700">
+              <label
+                htmlFor="desc"
+                className="block text-sm font-medium text-gray-700"
+              >
                 Description
               </label>
               <input
                 className="w-[36vw] border border-gray-300 rounded-md p-2"
-                type="text" id="desc" name="desc"
+                type="text"
+                id="desc"
+                name="desc"
                 placeholder="One line description"
                 onChange={(e) => setDesc(e.target.value)}
                 required
@@ -155,7 +184,12 @@ export default function UploadRecord(props) {
             </div>
 
             <div className="flex flex-col gap-1 md:w-3/4">
-              <label htmlFor="payment" className="block text-sm font-medium text-gray-700">Documents (upload in .zip or .rar format)</label>
+              <label
+                htmlFor="payment"
+                className="block text-sm font-medium text-gray-700"
+              >
+                Documents (upload in .zip or .rar format)
+              </label>
               <input
                 className="w-[36vw] border border-gray-300 rounded-md p-2"
                 type="file"
@@ -165,7 +199,12 @@ export default function UploadRecord(props) {
             </div>
 
             <div className="flex flex-col gap-1 md:w-1/2">
-              <label htmlFor="timestamp" className="block text-sm font-medium text-gray-700">TIMESTAMP</label>
+              <label
+                htmlFor="timestamp"
+                className="block text-sm font-medium text-gray-700"
+              >
+                TIMESTAMP
+              </label>
               <input
                 value={timestamp}
                 className="w-[36vw] border border-gray-300 rounded-md p-2"
@@ -178,11 +217,16 @@ export default function UploadRecord(props) {
             </div>
 
             <div className="flex justify-start mt-4">
-              <button type="submit" className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded">Upload to Blockchain</button>
+              <button
+                type="submit"
+                className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded"
+              >
+                Upload to Blockchain
+              </button>
             </div>
           </form>
         </div>
       </div>
     </div>
   );
-};
+}
