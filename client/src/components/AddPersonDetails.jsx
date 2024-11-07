@@ -10,12 +10,16 @@ export default function AddPersonDetails({ person, inputs, submitAction, loading
   const handleChange = (e)=>{
     setFormData({...formData, [e.target.name]: e.target.value})
   }
+  const handleSubmit = (e)=>{
+    e.preventDefault();
+    submitAction(formData);
+  }
 
   return (
     <div className="w-full h-full px-4 sm:px-8 flex items-center justify-around">
         <form 
             className="w-full lg:w-auto border border-gray-600 rounded-3xl p-2 py-4 md:p-8 md:py-10 flex flex-col gap-4 md:gap-8" 
-            onSubmit={submitAction}
+            onSubmit={handleSubmit}
         >
             
             <div className="flex flex-col md:flex-row justify-between">
@@ -24,7 +28,7 @@ export default function AddPersonDetails({ person, inputs, submitAction, loading
 
             {
                 inputs.map(input => 
-                    <div className="flex gap-8 justify-between lg:justify-start">
+                    <div className="flex gap-8 justify-between lg:justify-start" key={input}>
                         <label htmlFor="courseName" className="min-w-[9vw] text-md md:text-lg capitalize">
                             {person} {input}
                         </label>
