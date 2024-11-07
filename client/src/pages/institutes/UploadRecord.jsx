@@ -54,8 +54,11 @@ export default function UploadRecord(props) {
       // Step 1: Read file content
       const fileContent = readFileContent(file);
       // Step 2: Create a SHA-256 hash with ethers
-      const hashHex = ethers.keccak256(new Uint8Array(fileContent));
-      console.log(hashHex)
+      const hashHex = ethers.keccak256 ? 
+        ethers.keccak256(new Uint8Array(fileContent))
+        :
+        ethers.utils.keccak256(new Uint8Array(fileContent));
+      console.log(hashHex);
       // (file, '../../../uploads/'+hashHex)
 
       setDocHash(hashHex);
