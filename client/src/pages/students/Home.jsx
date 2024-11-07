@@ -9,15 +9,15 @@ export default function Home() {
   const [records, setRecords] = useState([])
 
   useEffect(() => {
+    console.log(account, loading)
+    setLoading(true)
     try{
-      setLoading(true)
-      (contract.methods
-        .getStudentRecords(account)
-        .send({ from: account })
-      ).then((res) => {
+      (contract.methods.getStudentRecords(account).call({from : account}))
+      .then((res) => {
+        console.log(res)
         setRecords(res)
         setLoading(false)
-      })  
+      })
     }catch(err){
       console.error(err)
       setLoading(false)
