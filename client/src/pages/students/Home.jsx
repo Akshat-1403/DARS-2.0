@@ -39,9 +39,10 @@ export default function Home() {
                 r.isApproved ?
                   <ListComponent
                     title={r.title}
-                    studentId={r.studentId}
-                    instituteId={r.instituteId}
+                    studentId={r.studentAddress}
+                    instituteId={r.instituteAddress}
                     description={r.description}
+                    docHash = {r.docHash}
                     key={indx}
                     to={`/records/${r.studentId}`}
                   />
@@ -60,9 +61,10 @@ export default function Home() {
                 r.isApproved ? null :
                   <ListComponent
                     title={r.title}
-                    studentId={r.studentId}
-                    instituteId={r.instituteId}
+                    studentId={r.studentAddress}
+                    instituteId={r.instituteAddress}
                     description={r.description}
+                    docHash = {r.docHash}
                     isApproved={false}
                     key={indx}
                     to={`/records/${r.studentId}`}
@@ -75,28 +77,3 @@ export default function Home() {
     </LoadingWrapper>
   );
 }
-
-
-const localRecords = [
-  {
-    title: "Hello World",
-    studentId: "St&^EOWFIUEW324EF$#^KFH@WeaFWcwC",
-    instituteId: "Rw&^EOWFIUEW324EF$#^KFH@WeaFWcwC",
-    description: "lorem ipsum fealwcv iof ejwafic voierwaho lf eaw feaf w&^EOWFIUEW324EF$#^KFH@WeaFWcwC &^EOWFIUEW324EF$#^KFH@WeaFWcwC fjea oeaivw ovbiawqi fioewahv",
-    isApproved: true,
-  },
-  {
-    title: "Hello World 1.2",
-    studentId: "St&^EOWFIUEW324EF$#^KFH@WeaFWcwC",
-    instituteId: "Rw&^EOWFIUEW324EF$#^KFH@WeaFWcwC",
-    description: "lorem ipsum fealwcv iof ejwafic voierwaho efae gfeaf eage wgewafe vfewa ewaef efawef efaw3e4g dshrrtd jnytrfj ftykliukogvum sef rnhtsre fevwa febret hterbdb fhkjuyjh lf eaw feaf w&^EOWFIUEW324EF$#^KFH@WeaFWcwC &^EOWFIUEW324EF$#^KFH@WeaFWcwC fjea oeaivw ovbiawqi fioewahv",
-    isApproved: true,
-  },
-  {
-    title: "Hello World 2",
-    studentId: "Yr3&^EOWFIUEW324EF$#^KFH@WeaFWcwC",
-    instituteId: "Je&^EOWFIUEW324EF$#^KFH@WeaFWcwC",
-    description: "lorem ipsum fealwcv iof ejwafic voierwaho lf eaw feaf w&^EOWFIUEW324EF$#^KFH@WeaFWcwC &^EOWFIUEW324EF$#^KFH@WeaFWcwC fjea oeaivw ovbiawqi fioewahv",
-    isApproved: false,
-  }
-]

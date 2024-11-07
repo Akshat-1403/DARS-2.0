@@ -2,8 +2,14 @@ const express = require('express');
 const multer = require('multer');
 const fs = require('fs');
 const path = require('path');
+const cors = require('cors')
 
 const app = express();
+
+app.use(cors({
+  origin: '*'
+}))
+
 const PORT = 3000;
 
 // Multer storage configuration to store the file temporarily
@@ -29,6 +35,27 @@ app.post('/upload', upload.single('file'), (req, res) => {
       return res.status(500).send("Failed to save file");
     }
     res.send("File uploaded and saved successfully!");
+  });
+});
+
+app.get('/download/:hash', (req, res) => {
+  const hash = req.params.hash;
+  const filePath = path.join(__dirname, 'uploads', `${hash}.pdf`);
+
+  // Check if file exists
+  fs.access(filePath, fs.constants.F_OK, (err) => {
+    if (err) {
+      console.error("File not found:", err);
+      return res.status(404).send("File not found");
+    }
+
+    // Send the file for download
+    res.download(filePath, `${hash}.pdf`, (err) => {
+      if (err) {
+        console.error("Error downloading file:", err);
+        res.status(500).send("Failed to download file");
+      }
+    });
   });
 });
 

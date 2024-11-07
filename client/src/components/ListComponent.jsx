@@ -40,7 +40,7 @@ export default function ListComponent(resource) {
             }
           </p>
           <p>
-            {resource.docHash}
+            doc Hash: {resource.docHash}
           </p>
           {
             resource.isApproved===false && 

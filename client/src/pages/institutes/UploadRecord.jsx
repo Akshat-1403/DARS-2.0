@@ -52,7 +52,7 @@ export default function UploadRecord(props) {
     if (!file) return;
     try {
       // Step 1: Read file content
-      const fileContent = readFileContent(file);
+      const fileContent = await readFileContent(file);
       // Step 2: Create a SHA-256 hash with ethers
       const hashHex = ethers.keccak256 ? 
         ethers.keccak256(new Uint8Array(fileContent))
@@ -74,7 +74,7 @@ export default function UploadRecord(props) {
       if (response.ok) {
         console.log("File uploaded successfully!");
       } else {
-        console.error("File upload failed");
+        throw new Error('cannt upload file')
       }
     } catch (error) {
       console.error("Error creating hash:", error);
