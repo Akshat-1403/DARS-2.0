@@ -36,7 +36,6 @@ export default function ConnectBtn() {
             className="px-3 py-2 relative hover:cursor-pointer bg-blue-500 rounded"
             onClick={() => {
               initWeb3();
-              setShowOption(!showOption)
             }}
         >
             {

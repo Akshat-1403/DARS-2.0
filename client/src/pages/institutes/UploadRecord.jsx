@@ -1,9 +1,8 @@
 import { useState, useEffect } from 'react';
 import { ethers } from 'ethers'
-import fs from 'fs'
 // import ipfs from '../ipfs.js';
 
-import { useAppContext } from '../context/context';
+import { useAppContext } from '../../context/context';
 // import EducationContract from "../contracts/EducationContract.json";
 // import getWeb3 from "../utils/getWeb3.js";
 
@@ -53,10 +52,10 @@ export default function UploadRecord(props) {
     if (!file) return;
     try {
       // Step 1: Read file content
-      const fileContent = fs.readFileSync(file);
+      const fileContent = readFileContent(file);
       // Step 2: Create a SHA-256 hash with ethers
-      const hashHex = ethers.utils.keccak256(fileContent);
-      fs.copyFileSync(file, '../../../uploads/'+hashHex)
+      const hashHex = ethers.keccak256(new Uint8Array(fileContent));
+      // (file, '../../../uploads/'+hashHex)
 
       setDocHash(hashHex);
     } catch (error) {
@@ -66,10 +65,11 @@ export default function UploadRecord(props) {
 
   const onSubmit = async (event) => {
     event.preventDefault();
+    console.log(contract)
     try {
-      const res = await contract.methods.methods
-      .uploadDoc(address, docHash, recordName, desc)
-      .send({ from: account });
+      const res = await (contract.methods
+        .uploadDoc(address, docHash, recordName, desc)
+        .send({ from: account }));
 
       // setDetails(response);
       console.log(res);
@@ -158,7 +158,7 @@ export default function UploadRecord(props) {
               <input
                 className="w-[36vw] border border-gray-300 rounded-md p-2"
                 type="file"
-                accept="application/zip,application/x-zip,application/x-zip-compressed,application/octet-stream"
+                accept="application/pdf"
                 onChange={captureFile}
               />
             </div>

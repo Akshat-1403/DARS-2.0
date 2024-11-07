@@ -2,7 +2,7 @@ import SharedLayout from "./SharedLayout";
 import ProtectedPage from "./ProtectedPage";
 import NotFoundPage from "./NotFoundPage";
 import LandingPage from "./LandingPage";
-import UploadRecord from "./UploadRecord";
+import UploadRecord from "./institutes/UploadRecord";
 import ViewRecordPage from "./ViewRecordPage";
 import SelectRoles from "./Roles";
 

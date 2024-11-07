@@ -13,13 +13,13 @@ export default function SelectRoles() {
     {
         title: "Institute",
         img: "institute.svg",
-        to: "/student",
+        to: "/upload-record",
         action: ()=>setRoleUsingIndex(1)
     },
     {
         title: "Verifier",
         img: "/others.svg",
-        to: "/student",
+        to: "/view-record",
         action: ()=>setRoleUsingIndex(2),
     },
   ]
