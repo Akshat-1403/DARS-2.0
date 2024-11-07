@@ -6,6 +6,8 @@ import UploadRecord from "./UploadRecord";
 import ViewRecordPage from "./ViewRecordPage";
 import SelectRoles from "./Roles";
 
+import { Home } from "./students";
+
 export {
     SharedLayout,
     ProtectedPage, 
@@ -14,4 +16,5 @@ export {
     SelectRoles,
     UploadRecord, 
     ViewRecordPage, 
+    Home, 
 }

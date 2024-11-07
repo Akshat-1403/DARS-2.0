@@ -9,7 +9,8 @@ import {
   LandingPage,
   ViewRecordPage,
   UploadRecord,
-  SelectRoles
+  SelectRoles,
+  Home
 }  from "./pages";
 import { ContextProvider } from "./context/context";
 
@@ -36,6 +37,7 @@ function App() {
             <Route path="/view-record" element={<ViewRecordPage />} />
             <Route path="/upload-record" element={<UploadRecord />} />
             <Route path="/select-roles" element={<SelectRoles />} />
+            <Route path="/student" element={<Home />} />
           </Route>
           <Route path="*" element={<NotFoundPage />} />
         </Routes>

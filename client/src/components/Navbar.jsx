@@ -1,10 +1,23 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import ConnectBtn from "./ConnectBtn";
+import { useAppContext } from "../context/context";
 
-const Navbar = ({ showConnectModal }) => {
+export default function Navbar() {
   const [toggleValue, setToggle] = useState(false);
-
+  const {role, AVAILABLE_ROLES} = useAppContext();
+  const leftNav = {
+    [AVAILABLE_ROLES.STUDENT]: [
+      {title: "Your Records", to: "student"}, 
+      {title: "Search Record", to: "view-record"}
+    ],
+    [AVAILABLE_ROLES.INSTITUTE]: [
+      {title: "Add Records", to: "add-record"}, 
+      {title: "Search Record", to: "view-record"}
+    ],
+    [AVAILABLE_ROLES.OTHER]: [{title: "Search Record", to: "view-record"}],
+  }
+  
   const navRef = useRef(null);
 
 
@@ -55,9 +68,13 @@ const Navbar = ({ showConnectModal }) => {
           (toggleValue && "nav__links nav__links--expanded !text-sm") || "nav__links !text-sm"
         }
       >
-        <Link className="text-center" onClick={() => setToggle(false)} to="/view-record">
-          View Record
-        </Link>
+        {
+          leftNav[role].map(data => 
+            <Link className="text-center" onClick={() => setToggle(false)} to={data.to} key={data.title}>
+              {data.title}
+            </Link>
+          )
+        }
         <a
           href="https://ethereum.org/en/developers/docs/"
           target="_blank"
@@ -71,5 +88,3 @@ const Navbar = ({ showConnectModal }) => {
     </nav>
   );
 };
-
-export default Navbar;

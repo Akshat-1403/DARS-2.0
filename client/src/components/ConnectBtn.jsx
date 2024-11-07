@@ -40,7 +40,7 @@ export default function ConnectBtn() {
             }}
         >
             {
-              account? truncateStr(account,12) : "Connect"
+              account? truncateStr(account, 12) : "Connect"
             }
         </button>
     );
