@@ -5,7 +5,7 @@ import { useAppContext } from "../../context/context";
 export default function AddStudentPage() {
   const inputs = ["name"]
   const [localLoading, setLocalLoading] = useState(false);
-  const { contract } = useAppContext();
+  const { account, contract } = useAppContext();
 
   const handleSubmit = async (formData) => {
     setLocalLoading(true);

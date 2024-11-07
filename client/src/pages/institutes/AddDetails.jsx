@@ -5,7 +5,7 @@ import { useAppContext } from "../../context/context";
 export default function AddInstitutePage() {
   const inputs = ["name", "location"]
   const [localLoading, setLocalLoading] = useState(false);
-  const { contract } = useAppContext();
+  const { account, contract } = useAppContext();
 
   const handleSubmit = async (formData)=>{
     setLocalLoading(true);
