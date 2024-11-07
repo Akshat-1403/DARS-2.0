@@ -1,4 +1,5 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
+import toast from "react-hot-toast";
 const context = React.createContext();
 
 
@@ -19,9 +20,16 @@ export const ContextProvider = ({children})=>{
                 .call({from : account})
             setRecords(res);
           } catch(err) { 
+            toast.error("Cannot get Records", {duration: 3000})
             console.error(err)
           }
     }
+
+    useEffect(()=>{
+        if(!account) {
+            toast.success("Please Login!", {duration: 3000});
+        }
+    }, []);
 
     return (
         <context.Provider
