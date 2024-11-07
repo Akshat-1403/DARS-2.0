@@ -6,9 +6,19 @@ export const ContextProvider = ({children})=>{
     const [web3, setWeb3] = useState(null);
     const [account, setAccount] = useState(null);
     const [contract, setContract] = useState(null);
+    const [records, setRecords] = useState([]);
     const [role, setRole] = useState(AVAILABLE_ROLES.OTHER);
+    
     const setRoleUsingIndex = (index) => {
         setRole(Object.values(AVAILABLE_ROLES)[index])
+    }
+    const getRecords = async ()=>{
+        try{
+            const res = await contract?.methods.getStudentRecords(account).call({from : account})
+            setRecords(res);
+          } catch(err) { 
+            console.error(err)
+          }
     }
 
     return (
@@ -18,6 +28,7 @@ export const ContextProvider = ({children})=>{
                 account, setAccount,
                 contract, setContract,
                 role, setRole, setRoleUsingIndex, 
+                records, setRecords, getRecords, 
                 AVAILABLE_ROLES,
             }}
         >

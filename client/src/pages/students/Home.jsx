@@ -4,24 +4,14 @@ import { ListComponent, LoadingWrapper } from "../../components";
 import { useAppContext } from "../../context/context";
 
 export default function Home() {
-  const { account, contract } = useAppContext();
+  const { records, getRecords, account, contract } = useAppContext();
   const [loading, setLoading] = useState(false);
-  const [records, setRecords] = useState([])
 
   useEffect(() => {
-    console.log(account, loading)
+    if(records.length > 0) return;
     setLoading(true)
-    try{
-      (contract.methods.getStudentRecords(account).call({from : account}))
-      .then((res) => {
-        console.log(res)
-        setRecords(res)
-        setLoading(false)
-      })
-    }catch(err){
-      console.error(err)
-      setLoading(false)
-    }
+    getRecords()
+      .finally(setLoading(false));
   }, [])
   
   return (
@@ -42,7 +32,7 @@ export default function Home() {
                     studentId={r.studentAddress}
                     instituteId={r.instituteAddress}
                     description={r.description}
-                    docHash = {r.docHash}
+                    docHash={r.docHash}
                     key={indx}
                     to={`/records/${r.studentId}`}
                   />
@@ -64,7 +54,7 @@ export default function Home() {
                     studentId={r.studentAddress}
                     instituteId={r.instituteAddress}
                     description={r.description}
-                    docHash = {r.docHash}
+                    docHash={r.docHash}
                     isApproved={false}
                     key={indx}
                     to={`/records/${r.studentId}`}
