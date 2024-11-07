@@ -49,9 +49,6 @@ export default function ListComponent(resource) {
               : null
             }
           </p>
-          <p>
-            {resource.docHash}
-          </p>
           {
             resource.isApproved===false && 
             <button onClick={handleApprove} className="h-fit px-3 py-1.5 bg-blue-500 text-white rounded">
@@ -59,6 +56,9 @@ export default function ListComponent(resource) {
             </button>
           }
         </div>
+        <p className="text-gray-500 text-sm">
+          {resource.docHash}
+        </p>
       </Link>
     </li>
   );
