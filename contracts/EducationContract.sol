@@ -108,7 +108,16 @@ contract EducationContract {
 
     // Function to get all documents associated with a student
     function getStudentRecords(address studentAddress) public view returns (bytes32[] memory) {
-        return studentDocuments[studentAddress];
+        uint256 docCount = studentDocuments[studentAddress].length;
+        
+        Document[] memory completeDocuments = new Document[](docCount);
+    
+        for (uint256 i = 0; i < docCount; i++) {
+            bytes32 docHash = studentDocuments[studentAddress][i];
+            completeDocuments[i] = documents[docHash];
+        }
+        
+        return completeDocuments;
     }
 
 
