@@ -8,7 +8,7 @@ export default function Home() {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    if(records.length > 0) return;
+    if(records && records.length > 0) return;
     setLoading(true)
     getRecords()
       .finally(setLoading(false));

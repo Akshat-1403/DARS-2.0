@@ -38,7 +38,10 @@ export default function ViewSingleRecordPage() {
 
     return (
         <div className="w-full h-full flex flex-col items-start gap-4">
-            <h3 className="text-3xl font-bold">{record?.title}</h3>
+            <div>
+                <h3 className="text-3xl font-bold">{record?.title}</h3>
+                <p className="text-gray-500 text-sm">{recordId}</p>
+            </div>
             <div>
                 <h3 className="text-lg font-medium">Student Details</h3>
                 <hr />
@@ -71,7 +74,7 @@ export default function ViewSingleRecordPage() {
                     </div>
                 </div>
             </div>
-            <button className="px-3 py-1.5 bg-blue-500 text-white" onClick={handleDownload}>
+            <button className="px-3 py-1.5 bg-blue-500 text-white rounded" onClick={handleDownload}>
                 Download Document
             </button>
         </div>

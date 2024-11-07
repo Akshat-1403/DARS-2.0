@@ -26,8 +26,8 @@ export default function ListComponent(resource) {
   return (
     <li className="w-full min-w-fit rounded-2xl overflow-hidden border border-blue-500">
       <Link 
-      className="p-4 w-full flex flex-col justify-between gap-4"
-        to={resource.url || ""}
+        className="p-4 w-full flex flex-col justify-between gap-4"
+        to={"/view-record/" + resource.docHash}
       >
         <div className="w-full flex justify-between">
           <h3 className="text-xl font-medium">{resource.title}</h3>

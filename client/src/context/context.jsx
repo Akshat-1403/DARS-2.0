@@ -14,7 +14,9 @@ export const ContextProvider = ({children})=>{
     }
     const getRecords = async ()=>{
         try{
-            const res = await contract?.methods.getStudentRecords(account).call({from : account})
+            const res = await contract?.methods
+                .getStudentRecords(account)
+                .call({from : account})
             setRecords(res);
           } catch(err) { 
             console.error(err)
