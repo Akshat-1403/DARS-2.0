@@ -24,6 +24,7 @@ contract EducationContract {
         string title;
         string description;
         bool isApproved;
+        bytes32 docHash;
     }
 
     // Mappings to store the details
@@ -35,6 +36,11 @@ contract EducationContract {
     // Modifier to restrict access to only registered institutes
     modifier onlyInstitute() {
         require(institutes[msg.sender].exists, "Only institutes can perform this action");
+        _;
+    }
+
+    modifier onlyStudent() {
+        require(students[msg.sender].exists, "Only students can perform this action");
         _;
     }
 
@@ -68,7 +74,8 @@ contract EducationContract {
             studentAddress: studentAddress,
             title: docTitle,
             description: docDesc,
-            isApproved: false
+            isApproved: false,
+            docHash : docHash
         });
 
         // Link document to the student
@@ -107,7 +114,7 @@ contract EducationContract {
     }
 
     // Function to get all documents associated with a student
-    function getStudentRecords(address studentAddress) public view returns (bytes32[] memory) {
+    function getStudentRecords(address studentAddress) public view onlyStudent returns (Document[] memory) {
         uint256 docCount = studentDocuments[studentAddress].length;
         
         Document[] memory completeDocuments = new Document[](docCount);
