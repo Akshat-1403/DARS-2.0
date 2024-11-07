@@ -10,7 +10,10 @@ import {
   ViewRecordPage,
   UploadRecord,
   SelectRoles,
-  Home
+  Home,
+  AddStudentPage,
+  AddInstitutePage,
+  ViewSingleRecordPage
 }  from "./pages";
 import { ContextProvider } from "./context/context";
 
@@ -35,9 +38,12 @@ function App() {
                 <Route path=":studentId" element={<StudentPage />} />
               </Route> */}
             <Route path="/view-record" element={<ViewRecordPage />} />
+            <Route path="/view-record/:recordId" element={<ViewSingleRecordPage />} />
             <Route path="/upload-record" element={<UploadRecord />} />
             <Route path="/select-roles" element={<SelectRoles />} />
             <Route path="/student" element={<Home />} />
+            <Route path="/add-student-details" element={<AddStudentPage />} />
+            <Route path="/add-institute-details" element={<AddInstitutePage />} />
           </Route>
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
