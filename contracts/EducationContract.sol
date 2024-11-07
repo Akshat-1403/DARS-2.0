@@ -38,15 +38,25 @@ contract EducationContract {
         _;
     }
 
-    // // Function to add or update institute details
-    // function addOrUpdateInstitute(string memory name, string memory location) public {
-    //     institutes[msg.sender] = Institute(name, location, true);
-    // }
+    function getRole() public view returns (uint8) {
+        if (students[msg.sender].exists) return 0;
+        if (institutes[msg.sender].exists) return 1;
+        return 2;
+    }
 
-    // // Function to add or update student details
-    // function addOrUpdateStudent(string memory name) public {
-    //     students[msg.sender] = Student(name, true);
-    // }
+    // Function to add or update institute details
+    function addInstitute(string memory name, string memory location) public {
+        require(!students[msg.sender].exists, "Already a student.");
+        require(!institutes[msg.sender].exists, "Already a institute.");
+        institutes[msg.sender] = Institute(name, location, true);
+    }
+
+    // Function to add or update student details
+    function addStudent(string memory name) public {
+        require(!students[msg.sender].exists, "Already a student.");
+        require(!institutes[msg.sender].exists, "Already a institute.");
+        students[msg.sender] = Student(name, true);
+    }
 
     // Function to upload a document (only by institutes)
     function uploadDoc(address studentAddress, bytes32 docHash, string memory docTitle, string memory docDesc) public onlyInstitute {
