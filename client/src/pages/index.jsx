@@ -2,13 +2,16 @@ import SharedLayout from "./SharedLayout";
 import ProtectedPage from "./ProtectedPage";
 import NotFoundPage from "./NotFoundPage";
 import LandingPage from "./LandingPage";
-import UploadRecord from "./institutes/UploadRecord";
 import ViewRecordPage from "./ViewRecordPage";
+import ViewSingleRecordPage from "./ViewSingleRecordPage";
 import SelectRoles from "./Roles";
 
-import { Home } from "./students";
+import { Home, AddStudentPage } from "./students";
+import { AddInstitutePage, UploadRecord } from "./institutes";
 
 export {
+    AddInstitutePage,
+    AddStudentPage,
     SharedLayout,
     ProtectedPage, 
     NotFoundPage, 
@@ -16,5 +19,6 @@ export {
     SelectRoles,
     UploadRecord, 
     ViewRecordPage, 
+    ViewSingleRecordPage, 
     Home, 
 }

@@ -1,6 +1,7 @@
 import { useState } from "react"
+import { Loader } from "../components";
 
-export default function AddPersonDetails({ person, inputs, submitAction }) {
+export default function AddPersonDetails({ person, inputs, submitAction, loading=false }) {
   const [formData, setFormData] = useState(()=>{
     const obj = {};
     inputs.forEach(input => obj[input] = "");
@@ -24,7 +25,7 @@ export default function AddPersonDetails({ person, inputs, submitAction }) {
             {
                 inputs.map(input => 
                     <div className="flex gap-8 justify-between lg:justify-start">
-                        <label htmlFor="courseName" className="min-w-[9vw] text-md md:text-lg">
+                        <label htmlFor="courseName" className="min-w-[9vw] text-md md:text-lg capitalize">
                             {person} {input}
                         </label>
                         <input 
