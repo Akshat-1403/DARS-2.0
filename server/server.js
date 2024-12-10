@@ -1,5 +1,8 @@
+require('dotenv').config();
 const express = require('express');
 const multer = require('multer');
+const { v2: cloudinary } = require('cloudinary');
+const streamifier = require('streamifier'); // For streaming file uploads to Cloudinary
 const fs = require('fs');
 const path = require('path');
 const cors = require('cors')
@@ -12,7 +15,14 @@ app.use(cors({
 
 const PORT = 3000;
 
-// Multer storage configuration to store the file temporarily
+// Configure Cloudinary
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+});
+
+// Multer configuration for in-memory file storage
 const storage = multer.memoryStorage();
 const upload = multer({ storage });
 
@@ -25,38 +35,27 @@ app.post('/upload', upload.single('file'), (req, res) => {
     return res.status(400).send("File or hash missing");
   }
 
-  // Define the destination path with the hash as the filename
-  const filePath = path.join(__dirname, 'uploads', `${hash}.pdf`);
-
-  // Write the file to the destination path
-  fs.writeFile(filePath, file.buffer, (err) => {
-    if (err) {
-      console.error("Error saving file:", err);
-      return res.status(500).send("Failed to save file");
+  // Upload the file to Cloudinary
+  const uploadStream = cloudinary.uploader.upload_stream(
+    { resource_type: 'raw', public_id: hash }, // Store as a raw file with the hash as its ID
+    (error, result) => {
+      if (error) {
+        console.error("Cloudinary upload error:", error);
+        return res.status(500).send("Failed to upload file");
+      }
+      res.send(`File uploaded successfully! Cloudinary URL: ${result.secure_url}`);
     }
-    res.send("File uploaded and saved successfully!");
-  });
+  );
+
+  streamifier.createReadStream(file.buffer).pipe(uploadStream);
 });
 
 app.get('/download/:hash', (req, res) => {
   const hash = req.params.hash;
-  const filePath = path.join(__dirname, 'uploads', `${hash}.pdf`);
+  const url = cloudinary.url(hash, { resource_type: 'raw' });
 
-  // Check if file exists
-  fs.access(filePath, fs.constants.F_OK, (err) => {
-    if (err) {
-      console.error("File not found:", err);
-      return res.status(404).send("File not found");
-    }
-
-    // Send the file for download
-    res.download(filePath, `${hash}.pdf`, (err) => {
-      if (err) {
-        console.error("Error downloading file:", err);
-        res.status(500).send("Failed to download file");
-      }
-    });
-  });
+  // Redirect the client to the Cloudinary URL
+  res.redirect(url);
 });
 
 // Start the server
