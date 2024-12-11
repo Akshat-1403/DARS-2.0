@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useAppContext } from "../context/context";
+import toast from "react-hot-toast";
 
 export default function ListComponent(resource) {
   const [expand, setExpand] = useState(false);
@@ -19,7 +20,8 @@ export default function ListComponent(resource) {
       console.log("Approved");
       getRecords();
     } catch(err) {
-      console.log("ERROR WHILE APPROVING RECORD", err)
+      toast.error("ERROR WHILE APPROVING RECORD" + err.message, {duration: 3000});
+      console.log("ERROR WHILE APPROVING RECORD" + err)
     }
   }
     
