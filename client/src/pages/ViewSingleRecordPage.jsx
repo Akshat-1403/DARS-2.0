@@ -12,10 +12,8 @@ export default function ViewSingleRecordPage() {
         setLocalLoading(true);
         const getRecord = async ()=>{
             try {
-                const res = await (contract.methods
-                  .getSingleRecord(recordId)
-                  .call({ from: account }));
-          
+                let res = await contract.methods.getSingleRecord(recordId).call({ from: account });
+        
                 console.log(res);
                 return res;
               } catch (error) {
@@ -24,12 +22,45 @@ export default function ViewSingleRecordPage() {
         }
 
         getRecord()
-            .then(res => setRecord(res))
+            .then(res => {
+                console.log(res)
+                setRecord(res)
+            })
             .finally(()=> setLocalLoading(false));
     }, []);
     
     const handleDownload = async (e) => {
         e.preventDefault();
+        try{
+            const url = 'http://localhost:3000/download/' + recordId
+            const response = await fetch(url, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/pdf',
+                }
+            });
+    
+            if (!response.ok) {
+                throw new Error(`Failed to download PDF: ${response.statusText}`);
+            }
+    
+            // Convert the response to a Blob (binary large object)
+            const blob = await response.blob();
+            const urlObject = URL.createObjectURL(blob);
+    
+            // Create a temporary anchor element to trigger the download
+            const link = document.createElement('a');
+            link.href = urlObject;
+            link.download = `document_${recordId}.pdf`;  // Set the file name
+            document.body.appendChild(link);
+            link.click();
+    
+            // Clean up the temporary link and revoke the Blob URL
+            document.body.removeChild(link);
+            URL.revokeObjectURL(urlObject);
+        } catch(err){
+            alert(err.message())
+        }
     }
 
     if(localLoading) {
