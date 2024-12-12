@@ -13,7 +13,7 @@ export default function Navbar() {
       { title: "Search Record", to: "view-record" },
     ],
     [AVAILABLE_ROLES.INSTITUTE]: [
-      { title: "Add Records", to: "add-record" },
+      { title: "Add Records", to: "upload-record" },
       { title: "Search Record", to: "view-record" },
     ],
     [AVAILABLE_ROLES.OTHER]: [{ title: "Search Record", to: "view-record" }],
