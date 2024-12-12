@@ -8,7 +8,7 @@ export default function SignupLoginBtns({ role, name, location }) {
   const [localLoading, setLocalLoading] = useState(false);
 
   const handleSingup = async () => {
-    if (!account) {
+    if (!account || !contract) {
       toast.error("Connect the metamask before login/signup.");
       return;
     }
@@ -33,12 +33,11 @@ export default function SignupLoginBtns({ role, name, location }) {
       }
 
       if (role === AVAILABLE_ROLES.INSTITUTE) {
-        console.log("Institute case executed ", name, location, account);
-        await contract?.methods
+        await contract.methods
           .addInstitute(name, location)
           .call({ from: account });
       } else if (role === AVAILABLE_ROLES.STUDENT) {
-        await contract?.methods.addStudent(name).call({ from: account });
+        await contract.methods.addStudent(name).call({ from: account });
       }
       setRole(role);
     } catch (err) {

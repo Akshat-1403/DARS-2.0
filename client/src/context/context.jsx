@@ -49,6 +49,7 @@ export const ContextProvider = ({ children }) => {
     }
   };
   const logout = () => {
+    setRole(AVAILABLE_ROLES.OTHER);
     setWeb3(null);
     setAccount(null);
     setContract(null);
