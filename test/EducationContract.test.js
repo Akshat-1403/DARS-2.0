@@ -109,7 +109,7 @@ contract("EducationContract", accounts => {
   });
 
   describe("student should be able to approve records", async () => {
-    const docHash = web3.utils.keccak256("Sample Document");
+    const docHash = web3.utils.keccak256("Sample Document1");
     const docTitle = "Sample Title";
     const docDesc = "Sample Description";
   
@@ -139,7 +139,6 @@ contract("EducationContract", accounts => {
   
     it("can provide all the docs for a student", async () => {
       const studentDocs = await instance.getStudentRecords(studentAccount, { from: studentAccount });
-      console.log(studentDocs)
       assert.equal(studentDocs.length, 1, "Student should have one document");
       assert.equal(studentDocs[0].title, docTitle, "Document title should match");
       assert.equal(studentDocs[0].description, docDesc, "Document description should match");

@@ -47,7 +47,7 @@ app.post('/upload', upload.single('file'), (req, res) => {
     }
   );
 
-  streamifier.createReadStream(file.buffer).pipe(uploadStream);
+  streamifier.createReadStream(file.buffer).pipe(uploadStream); 
 });
 
 app.get('/download/:hash', (req, res) => {
