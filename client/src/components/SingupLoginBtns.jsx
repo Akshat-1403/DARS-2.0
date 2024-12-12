@@ -33,15 +33,14 @@ export default function SignupLoginBtns({ role, name, location }) {
       }
 
       if (role === AVAILABLE_ROLES.INSTITUTE) {
-        console.log("Institute case executed ", name, location, account);
-        await contract?.methods
-          .addInstitute(name, location)
-          .call({ from: account });
+        console.log("Institute case executed ", name, location, account, contract);
+        await (contract.methods.addInstitute(name, location).send({ from: account }));
       } else if (role === AVAILABLE_ROLES.STUDENT) {
-        await contract?.methods.addStudent(name).call({ from: account });
+        await contract.methods.addStudent(name).send({ from: account });
       }
       setRole(role);
     } catch (err) {
+      console.log(err)
       toast.error(
         err.message?.message || err.message || "Something went wrong!"
       );
