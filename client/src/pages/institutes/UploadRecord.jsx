@@ -37,47 +37,50 @@ export default function UploadRecord(props) {
     return () => clearInterval(t);
   }, []);
 
-  function readFileContent(file) {
+  const readFileContent = (file) => {
     return new Promise((resolve, reject) => {
       const reader = new FileReader();
       reader.onload = (event) => resolve(event.target.result);
       reader.onerror = (error) => reject(error);
       reader.readAsArrayBuffer(file);
     });
-  }
+  };
 
   const captureFile = async (event) => {
     event.preventDefault();
     const file = event.target.files[0];
     if (!file) return;
+  
     try {
       // Step 1: Read file content
       const fileContent = await readFileContent(file);
+  
       // Step 2: Create a SHA-256 hash with ethers
-      const hashHex = ethers.keccak256 ? 
-        ethers.keccak256(new Uint8Array(fileContent))
-        :
-        ethers.utils.keccak256(new Uint8Array(fileContent));
-      console.log(hashHex);
-      // (file, '../../../uploads/'+hashHex)
-
+      const hashHex = ethers.keccak256(new Uint8Array(fileContent));
       setDocHash(hashHex);
-      
+  
+      // Step 3: Send file and hash to the server
       const formData = new FormData();
       formData.append("file", file);
       formData.append("hash", hashHex);
-
+  
       const response = await fetch("http://localhost:3000/upload", {
         method: "POST",
         body: formData,
       });
+  
       if (response.ok) {
-        console.log("File uploaded successfully!");
+        const result = await response.text(); // Assuming the server sends the Cloudinary URL as plain text
+        console.log("Cloudinary URL:", result);
+  
+        // Optionally display the Cloudinary URL or redirect
+        alert(`File uploaded! View it here: ${result}`);
+        window.open(result, "_blank"); // Open the PDF in a new tab
       } else {
-        throw new Error('cannt upload file')
+        console.error("File upload failed");
       }
     } catch (error) {
-      console.error("Error creating hash:", error);
+      console.error("Error uploading file:", error);
     }
   };
 
