@@ -9,7 +9,9 @@ import {
   AddStudentPage,
   AddInstitutePage,
   ViewSingleRecordPage,
+  ProtectedPage,
 } from "./pages";
+import { AVAILABLE_ROLES } from "./context/context";
 
 function App() {
   return (
@@ -17,25 +19,27 @@ function App() {
       <Routes>
         <Route path="/" element={<SharedLayout />}>
           <Route index element={<LandingPage />} />
-          {/* <Route path="records">
-                <Route index element={<UploadPage />} />
-                <Route 
-                  path="add" 
-                  element={
-                    <ProtectedPage>
-                      <AddStudentPage />
-                    </ProtectedPage>
-                  } 
-                />
-                <Route path=":studentId" element={<StudentPage />} />
-              </Route> */}
           <Route path="/view-record" element={<ViewRecordPage />} />
           <Route
             path="/view-record/:recordId"
             element={<ViewSingleRecordPage />}
           />
-          <Route path="/upload-record" element={<UploadRecord />} />
-          <Route path="/student" element={<Home />} />
+          <Route
+            path="/add-record"
+            element={
+              <ProtectedPage requiredRole={AVAILABLE_ROLES.INSTITUTE}>
+                <UploadRecord />
+              </ProtectedPage>
+            }
+          />
+          <Route
+            path="/student"
+            element={
+              <ProtectedPage requiredRole={AVAILABLE_ROLES.STUDENT}>
+                <Home />
+              </ProtectedPage>
+            }
+          />
           <Route path="/add-student-details" element={<AddStudentPage />} />
           <Route path="/add-institute-details" element={<AddInstitutePage />} />
         </Route>
