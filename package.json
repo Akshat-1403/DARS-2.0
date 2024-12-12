@@ -5,7 +5,6 @@
     "develop": "truffle develop"
   },
   "dependencies": {
-    "cloudinary": "^2.5.1",
     "dotenv": "^16.4.7",
     "express": "^4.21.1",
     "multer": "^1.4.5-lts.1",

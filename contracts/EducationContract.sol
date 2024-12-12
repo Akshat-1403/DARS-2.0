@@ -25,6 +25,7 @@ contract EducationContract {
         string description;
         bool isApproved;
         bytes32 docHash;
+        bool exists;
     }
 
     // Mappings to store the details
@@ -75,7 +76,8 @@ contract EducationContract {
             title: docTitle,
             description: docDesc,
             isApproved: false,
-            docHash : docHash
+            docHash : docHash,
+            exists : true
         });
 
         // Link document to the student
@@ -116,8 +118,8 @@ contract EducationContract {
         string memory instituteName,
         string memory instituteLocation
     ) {
+        require(documents[docHash].exists, "Document does not exists");
         Document memory doc = documents[docHash];
-        require(doc.instituteAddress == address(0), "Document does not exist");
         studentName = getStudentDetails(doc.studentAddress);
         (instituteName, instituteLocation) = getInstituteDetails(doc.instituteAddress);
         return (
