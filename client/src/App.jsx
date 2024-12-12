@@ -25,7 +25,7 @@ function App() {
             element={<ViewSingleRecordPage />}
           />
           <Route
-            path="/add-record"
+            path="/upload-record"
             element={
               <ProtectedPage requiredRole={AVAILABLE_ROLES.INSTITUTE}>
                 <UploadRecord />

@@ -3,6 +3,7 @@ import { ethers } from "ethers";
 // import ipfs from '../ipfs.js';
 
 import { useAppContext } from "../../context/context";
+import toast from "react-hot-toast";
 // import EducationContract from "../contracts/EducationContract.json";
 // import getWeb3 from "../utils/getWeb3.js";
 
@@ -50,37 +51,39 @@ export default function UploadRecord(props) {
     event.preventDefault();
     const file = event.target.files[0];
     if (!file) return;
-  
+
     try {
       // Step 1: Read file content
       const fileContent = await readFileContent(file);
-  
+
       // Step 2: Create a SHA-256 hash with ethers
-      const hashHex = ethers.keccak256(new Uint8Array(fileContent));
+      const hashHex = ethers.keccak256
+        ? ethers.keccak256(new Uint8Array(fileContent))
+        : ethers.utils.keccak256(new Uint8Array(fileContent));
       setDocHash(hashHex);
-  
+
       // Step 3: Send file and hash to the server
       const formData = new FormData();
       formData.append("file", file);
       formData.append("hash", hashHex);
-  
+
       const response = await fetch("http://localhost:3000/upload", {
         method: "POST",
         body: formData,
       });
-  
+
       if (response.ok) {
         const result = await response.text(); // Assuming the server sends the Cloudinary URL as plain text
         console.log("Cloudinary URL:", result);
-  
+
         // Optionally display the Cloudinary URL or redirect
-        alert(`File uploaded! View it here: ${result}`);
-        window.open(result, "_blank"); // Open the PDF in a new tab
+        toast.success("File processed succefully!");
       } else {
-        console.error("File upload failed");
+        throw new Error("Cannot upload the file!");
       }
     } catch (error) {
       console.error("Error uploading file:", error);
+      toast.error(error.message || "Cannot hash pdf!");
     }
   };
 
@@ -94,8 +97,10 @@ export default function UploadRecord(props) {
 
       // setDetails(response);
       console.log(res);
+      toast.success("File uploaded successfully!");
     } catch (error) {
       console.error("Error fetching record details:", error);
+      toast.error(error.message || "Cannot upload file on blockchain!");
     }
     // ipfs.files.add(buffer, (error, result) => {
     //   if (error) {
