@@ -1,46 +1,52 @@
-import getWeb3 from '../utils/getWeb3'
-import EducationContract from '../contracts/EducationContract.json'
+import { useAppContext } from "../context/context";
 import { truncateStr } from "../utils/truncateStr";
-import { useAppContext } from '../context/context';
+import { useState } from "react";
+import {
+  Button,
+  Dialog,
+  DialogHeader,
+  DialogFooter,
+} from "@material-tailwind/react";
 
-export default function ConnectBtn() {
-  const {web3, account, contract, setWeb3, setAccount, setContract} = useAppContext();
+export default function ConnectBtn({ className }) {
+  const { account, initWeb3, logout } = useAppContext();
+  const [showLogoutModal, setShowLogoutModal] = useState(false);
+  const handleChange = () => setShowLogoutModal((v) => !v);
+  const handleLogout = () => {
+    logout();
+    handleChange();
+  };
 
-    const initWeb3 = async () => {
-        if(web3 && account && contract) return;
-        try {
-          const web3 = await getWeb3();
-          const accounts = await web3.eth.getAccounts();
-          const networkId = await web3.eth.net.getId();
-          const deployedNetwork = EducationContract.networks[networkId];
-          const instance = new web3.eth.Contract(
-            EducationContract.abi,
-            deployedNetwork && deployedNetwork.address,
-          );
-    
-          setWeb3(web3);
-          setAccount(accounts[0]);
-          setContract(instance);
-        } catch (error) {
-          alert(`Failed to load wallet`);
-          console.error(error);
+  return (
+    <>
+      <button
+        className={
+          "text-white px-3 py-2 relative hover:cursor-pointer hover:bg-blue-800 bg-blue-500 rounded" +
+          " " +
+          className
         }
-      };
-    
-    //   useEffect(()=>{
-    //     initWeb3();
-    //   }, [])
-
-    return (
-        <button
-            className="px-3 py-2 relative hover:cursor-pointer bg-blue-500 rounded"
-            onClick={() => {
-              initWeb3();
-            }}
-        >
-            {
-              account? truncateStr(account, 12) : "Connect"
-            }
-        </button>
-    );
+        onClick={account ? handleChange : initWeb3}
+      >
+        {account ? truncateStr(account, 12) : "Connect"}
+      </button>
+      /*{" "}
+      <Dialog open={showLogoutModal} handler={handleChange}>
+        <DialogHeader>Do you want to logout?</DialogHeader>
+        <DialogFooter>
+          <Button
+            variant="text"
+            color="red"
+            onClick={handleChange}
+            className="mr-1"
+          >
+            <span>Cancel</span>
+          </Button>
+          <Button variant="gradient" color="blue" onClick={handleLogout}>
+            <span>Logout</span>
+          </Button>
+        </DialogFooter>
+      </Dialog>{" "}
+      */
+    </>
+  );
 }

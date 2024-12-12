@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useLayoutEffect, useState } from "react";
 
 import { ListComponent, LoadingWrapper } from "../../components";
 import { useAppContext } from "../../context/context";
@@ -6,7 +6,11 @@ import { useAppContext } from "../../context/context";
 export default function Home() {
   const { records, getRecords, account, contract } = useAppContext();
   const [loading, setLoading] = useState(false);
-
+  // useLayoutEffect(()=>{
+  //   const getRole = async ()=>{
+  //     await contract
+  //   }
+  // }, [])
   useEffect(() => {
     if(records && records.length > 0) return;
     setLoading(true)
