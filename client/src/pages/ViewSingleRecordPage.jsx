@@ -79,7 +79,7 @@ export default function ViewSingleRecordPage() {
                 <div className="flex justify-between items-center gap-8">
                     <div className="flex justify-center gap-4">
                         <p className="text-gray-500">Student Name:</p>
-                        <p>{}</p>
+                        <p>{record?.studentName}</p>
                     </div>
                     <div className="flex justify-center gap-4">
                         <p className="text-gray-500">Student Address:</p>
@@ -93,7 +93,7 @@ export default function ViewSingleRecordPage() {
                 <div className="flex flex-col gap-2 items-start">
                     <div className="flex justify-center gap-4">
                         <p className="text-gray-500">Institute Name:</p>
-                        <p>{}</p>
+                        <p>{record?.instituteName}</p>
                     </div>
                     <div className="flex justify-center gap-4">
                         <p className="text-gray-500">Institute Address:</p>
@@ -101,7 +101,7 @@ export default function ViewSingleRecordPage() {
                     </div>
                     <div className="flex justify-center gap-4">
                         <p className="text-gray-500">Institute Location:</p>
-                        <p>{}</p>
+                        <p>{record?.instituteLocation}</p>
                     </div>
                 </div>
             </div>
